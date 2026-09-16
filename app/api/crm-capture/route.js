@@ -16,7 +16,8 @@ export async function POST(request) {
   } catch {
     /* empty body */
   }
-  const source = body.source === "careers" ? "careers" : "contact";
+  const source =
+    body.source === "careers" ? "careers" : body.source === "ask" ? "ask" : "contact";
   const result = await forwardLeadToCrm({
     name: body.name,
     email: body.email,

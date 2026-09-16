@@ -8,6 +8,7 @@ import EnergyField from "@/components/EnergyField";
 import EnergyRail from "@/components/EnergyRail";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import RobotAsk from "@/components/RobotAsk";
 
 // Eager: above-the-fold + all pinned/scrubbed sections (their pin math must be
 // stable at first paint).
@@ -80,6 +81,7 @@ export default function Home() {
         <Memorial />
       </main>
       <Footer />
+      {ready && <RobotAsk />}
     </SmoothScroll>
   );
 }
