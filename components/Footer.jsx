@@ -9,7 +9,7 @@ export default function Footer() {
       <div className="container">
         <div className="top">
           <div className="col brand-col">
-            <img src="/img/logo.webp" alt="Powerline" className="flogo" />
+            <img src="/img/logo-white.webp" alt="Powerline" className="flogo" />
             <p className="ftag">{brand.tagline}</p>
             <div className="socials">
               <a href={brand.facebook} target="_blank" rel="noreferrer" aria-label="Facebook">Facebook</a>
