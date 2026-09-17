@@ -238,6 +238,11 @@ export default function AskExperience() {
   const stepLabel = STEPS[step];
   const chips = domain?.chips || [];
 
+  // "Prefer to talk?" markup is inlined in both slots below (console for desktop,
+  // page-end for mobile). It is NOT extracted to a variable on purpose: styled-jsx
+  // only scopes JSX written inline in the return, so a shared variable would lose
+  // its scoped styles.
+
   return (
     <section className="ask">
       {/* Engineering environment: technical grid + faint single-line motif + glow */}
@@ -295,20 +300,22 @@ export default function AskExperience() {
             ))}
           </div>
 
-          <div className="reach">
-            <span className="reach-label">Prefer to talk?</span>
-            <a className="reach-item" href={`tel:${brand.phone}`} aria-label={`Call Powerline on ${brand.phoneDisplay}`}>
-              <span className="reach-ico" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
-              </span>
-              <span className="reach-tx"><span className="rk">Call us</span><span className="rv">{brand.phoneDisplay}</span></span>
-            </a>
-            <a className="reach-item" href={`mailto:${formEmail}`} aria-label={`Email Powerline at ${formEmail}`}>
-              <span className="reach-ico" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></svg>
-              </span>
-              <span className="reach-tx"><span className="rk">Email us</span><span className="rv">{formEmail}</span></span>
-            </a>
+          <div className="reach-slot reach-slot--aside">
+            <div className="reach">
+              <span className="reach-label">Prefer to talk?</span>
+              <a className="reach-item" href={`tel:${brand.phone}`} aria-label={`Call Powerline on ${brand.phoneDisplay}`}>
+                <span className="reach-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
+                </span>
+                <span className="reach-tx"><span className="rk">Call us</span><span className="rv">{brand.phoneDisplay}</span></span>
+              </a>
+              <a className="reach-item" href={`mailto:${formEmail}`} aria-label={`Email Powerline at ${formEmail}`}>
+                <span className="reach-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></svg>
+                </span>
+                <span className="reach-tx"><span className="rk">Email us</span><span className="rv">{formEmail}</span></span>
+              </a>
+            </div>
           </div>
         </aside>
 
@@ -534,6 +541,24 @@ export default function AskExperience() {
             </div>
           )}
         </div>
+
+        <div className="reach-slot reach-slot--end">
+          <div className="reach">
+            <span className="reach-label">Prefer to talk?</span>
+            <a className="reach-item" href={`tel:${brand.phone}`} aria-label={`Call Powerline on ${brand.phoneDisplay}`}>
+              <span className="reach-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
+              </span>
+              <span className="reach-tx"><span className="rk">Call us</span><span className="rv">{brand.phoneDisplay}</span></span>
+            </a>
+            <a className="reach-item" href={`mailto:${formEmail}`} aria-label={`Email Powerline at ${formEmail}`}>
+              <span className="reach-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></svg>
+              </span>
+              <span className="reach-tx"><span className="rk">Email us</span><span className="rv">{formEmail}</span></span>
+            </a>
+          </div>
+        </div>
       </div>
 
       <style jsx>{`
@@ -541,7 +566,7 @@ export default function AskExperience() {
           position: relative;
           isolation: isolate;
           min-height: 100svh;
-          padding: clamp(6.5rem, 11vh, 9rem) 0 clamp(3rem, 6vh, 5rem);
+          padding: clamp(8rem, 13vh, 11rem) 0 clamp(3rem, 6vh, 5rem);
           background: var(--bg);
           overflow: hidden;
         }
@@ -675,6 +700,7 @@ export default function AskExperience() {
         .reach-item:active .reach-ico { transform: scale(0.94); }
 
         /* ── Stage (right) ── */
+        .reach-slot--end { display: none; }
         .stage { position: relative; min-height: 26rem; }
         .stepwrap { animation: stepIn 0.42s var(--ease) both; }
         .stepwrap[data-dir="-1"] { animation-name: stepBack; }
@@ -806,7 +832,7 @@ export default function AskExperience() {
 
         /* ── Responsive ── */
         @media (max-width: 960px) {
-          .ask { min-height: 0; padding-top: clamp(5.5rem, 16vw, 7rem); }
+          .ask { min-height: 0; padding-top: clamp(6.5rem, 17vw, 8.5rem); }
           .wrap { grid-template-columns: 1fr; gap: 1.6rem; }
           .console { position: static; flex-direction: column; gap: 1.1rem; order: -1; }
           .guide { gap: 0.9rem; }
@@ -816,6 +842,8 @@ export default function AskExperience() {
           .seg { flex-direction: column; align-items: center; gap: 0.35rem; flex: 1; text-align: center; padding: 0; }
           .seg::after { left: auto; top: 5px; left: calc(50% + 8px); width: calc(100% - 16px); height: 2px; }
           .slabel { font-size: 0.62rem; }
+          .reach-slot--aside { display: none; }
+          .reach-slot--end { display: block; margin-top: 0.4rem; }
           .reach { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 0.8rem 1.5rem; padding-top: 1.3rem; }
           .reach-label { width: 100%; }
           .rk { display: none; }

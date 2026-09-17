@@ -23,20 +23,25 @@ export default function RobotGuide({ mood = "idle", look = "center", compact = f
   const rightEye = useRef(null);
   const [nodding, setNodding] = useState(false);
 
-  // Eyes follow the cursor (pointer devices only; skipped for reduced-motion /
-  // touch, where the CSS `data-look` gaze takes over). Rects are read fresh each
-  // frame so it stays correct while the sticky console scrolls.
+  // Eyes follow the cursor ONLY on true desktop (a fine pointer AND a wide
+  // viewport). On phones / tablets / narrow panes the eyes rest at their per-step
+  // gaze, so the robot always looks forward instead of getting stuck gazing away.
+  // Rects are read fresh each frame so it stays correct while the page scrolls.
   useEffect(() => {
     if (typeof window === "undefined" || !window.matchMedia) return;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const fine = window.matchMedia("(pointer: fine)").matches;
-    if (reduce || !fine) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     let raf = 0;
     let last = null;
+    const enabled = () =>
+      window.matchMedia("(pointer: fine)").matches && window.innerWidth > 960;
+    const clearEyes = () => {
+      if (leftEye.current) leftEye.current.style.transform = "";
+      if (rightEye.current) rightEye.current.style.transform = "";
+    };
     const apply = () => {
       raf = 0;
-      if (!last) return;
+      if (!last || !enabled()) return;
       const eyes = [leftEye.current, rightEye.current];
       const rects = eyes.map((el) => el && el.getBoundingClientRect());
       for (let i = 0; i < eyes.length; i++) {
@@ -51,12 +56,21 @@ export default function RobotGuide({ mood = "idle", look = "center", compact = f
       }
     };
     const onMove = (e) => {
+      if (!enabled()) {
+        clearEyes(); // narrow / touch → keep the resting forward gaze
+        return;
+      }
       last = e;
       if (!raf) raf = requestAnimationFrame(apply);
     };
+    const onResize = () => {
+      if (!enabled()) clearEyes();
+    };
     window.addEventListener("mousemove", onMove, { passive: true });
+    window.addEventListener("resize", onResize, { passive: true });
     return () => {
       window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("resize", onResize);
       if (raf) cancelAnimationFrame(raf);
     };
   }, []);
@@ -111,6 +125,8 @@ export default function RobotGuide({ mood = "idle", look = "center", compact = f
           color: var(--orange);
         }
         .rg.compact { --rg: 3.9rem; }
+        @media (max-width: 960px) { .rg { --rg: 5rem; } }
+        @media (max-width: 400px) { .rg { --rg: 4.4rem; } }
 
         .rig {
           display: block;
