@@ -2,13 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
-import EnergyNetwork from "./EnergyNetwork";
+import CircuitIntro from "./CircuitIntro";
 
 /**
  * SECTION 00 — Opening experience.
- * Black → the Powerline "P" charges with energy inside its own pathways →
- * branches emerge from the logo and power a distribution network of nodes →
- * the scene holds, then fades to reveal the site.
+ * Black → the Powerline "P" powers up as the die of a circuit board → orange
+ * traces draw outward from the logo and light their pads until the board is
+ * complete → the finished board dollies toward the viewer and fades to reveal
+ * the site.
  */
 export default function Preloader({ onComplete }) {
   const root = useRef(null);
@@ -35,27 +36,18 @@ export default function Preloader({ onComplete }) {
       return;
     }
 
-    // Hold while the network powers up. Then the WHOLE lit network (bright P +
-    // lit lines + lit dots + POWERLINE) dollies toward the viewer together —
-    // nothing fades out early, nothing restarts — then the lit scene fades to
-    // reveal the site. No React state changes happen until finish(), so the
-    // animation can never re-render and restart.
+    // The board finishes drawing ≈1.7s. Hold a beat on the complete board, then
+    // freeze every loop (.ci-closing) and dolly the whole board toward the
+    // viewer while it fades — nothing restarts (no React state change until
+    // finish()), so the intro can never re-render mid-animation.
     const tl = gsap.timeline({ onComplete: finish });
-    // Kill all the infinite stroke/pulse loops the instant the dolly starts so
-    // the browser has the headroom to scale the SVG smoothly at 60fps.
-    // (Pushed to 4.2s — the cascade now reveals more gradually, so we hold a
-    // touch longer to let it finish before the dolly.)
-    tl.call(() => document.querySelector(".en")?.classList.add("en-closing"), null, 4.2);
+    tl.call(() => document.querySelector(".ci")?.classList.add("ci-closing"), null, 2.4);
     tl.to(
-      ".en-svg",
-      { scale: 2.5, transformOrigin: "49% 48%", duration: 1.7, ease: "power2.inOut", force3D: true },
-      4.2
+      ".ci-svg",
+      { scale: 1.9, transformOrigin: "50% 48%", duration: 1.3, ease: "power2.inOut", force3D: true },
+      2.4
     );
-    tl.to(
-      root.current,
-      { autoAlpha: 0, duration: 1.0, ease: "power2.out" },
-      5.2
-    );
+    tl.to(root.current, { autoAlpha: 0, duration: 1.0, ease: "power2.out" }, 2.95);
 
     return () => tl.kill();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -65,7 +57,7 @@ export default function Preloader({ onComplete }) {
 
   return (
     <div className="pre" ref={root}>
-      <EnergyNetwork />
+      <CircuitIntro />
 
       <style jsx>{`
         .pre {
