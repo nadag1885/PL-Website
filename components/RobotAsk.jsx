@@ -3,18 +3,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { track } from "@/lib/analytics";
-import { runAskTransition } from "@/lib/askTransition";
 
-// Home-page "Ask Powerline" robot mascot — a friendly support agent. Sits
-// bottom-right; its big glowing eyes follow the cursor (and blink), it wears a
-// headset, and it pops a random enquiry question in a speech bubble as the
-// visitor scrolls — until they click it, which takes them to /ask. Built with
-// HTML/CSS + inline SVG (no image) and brand colours (glossy dark screen face,
-// glowing orange eyes + smile). Coexists with the campaign popup: quiet until the
-// popup has been dismissed for the session, then it becomes the ongoing nudge.
-// Additive. Keyframe animations use literal easings (styled-jsx drops the
+// Home-page robot mascot — a friendly support agent. Sits bottom-right; its big
+// glowing eyes follow the cursor (and blink), it wears a headset, and it pops a
+// short prompt in a speech bubble as the visitor scrolls — clicking it takes them
+// to the contact page. Built with HTML/CSS + inline SVG (no image) and brand
+// colours. Keyframe animations use literal easings (styled-jsx drops the
 // `animation` shorthand when it contains var()).
-const POPUP_KEY = "pl_ask_popup_seen";
 const QUESTIONS = [
   "Not sure which panel fits?",
   "Comparing LV and MV options?",
@@ -42,9 +37,7 @@ export default function RobotAsk() {
     busyRef.current = true;
     track("robot_ask_click", {});
     setBubble(null);
-    // Run the shared branded curtain transition (owned by the popup, mounted
-    // globally); fall back to a plain navigation if it isn't registered.
-    if (!runAskTransition()) router.push("/ask");
+    router.push("/contact");
   }, [router]);
 
   // Eyes follow the cursor: the whole (glowing) eye shifts a few px toward the
@@ -82,18 +75,13 @@ export default function RobotAsk() {
     };
   }, []);
 
-  // On scroll, pop a random question — only once the campaign popup has been
-  // dismissed (so the two never nudge at once), and never while it's open.
+  // On scroll, pop a short prompt (cooldown-limited) nudging the visitor to get
+  // in touch.
   useEffect(() => {
-    const popupSeen = () => {
-      try { return sessionStorage.getItem(POPUP_KEY) === "1"; } catch { return false; }
-    };
     const onScroll = () => {
       if (busyRef.current) return;
       const now = Date.now();
       if (now < cooldownRef.current) return;
-      if (!popupSeen()) return;
-      if (document.getElementById("askpop-title")) return; // campaign popup open (its title id)
       let i;
       do { i = Math.floor(Math.random() * QUESTIONS.length); } while (i === lastRef.current && QUESTIONS.length > 1);
       lastRef.current = i;
@@ -124,11 +112,11 @@ export default function RobotAsk() {
       {bubble && (
         <div className="bubble" aria-hidden="true" onClick={go}>
           <p className="q">{bubble}</p>
-          <span className="hint">Ask Powerline &rarr;</span>
+          <span className="hint">Talk to us &rarr;</span>
         </div>
       )}
 
-      <button className="bot" type="button" onClick={go} aria-label="Ask Powerline — open the enquiry page">
+      <button className="bot" type="button" onClick={go} aria-label="Contact Powerline">
         <span className="rig">
           <span className="assembly">
             <span className="band" aria-hidden="true" />

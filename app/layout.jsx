@@ -4,7 +4,6 @@ import { Analytics } from "@vercel/analytics/next";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import StyledJsxRegistry from "./registry";
 import ChunkReload from "@/components/ChunkReload";
-import AskCampaignPopup from "@/components/AskCampaignPopup";
 
 // Self-hosted at build time by Next — no runtime external request, no @import,
 // no manual <head>. Montserrat stands in for the proprietary Nexa headline face.
@@ -71,7 +70,6 @@ export default function RootLayout({ children }) {
       <body>
         <ChunkReload />
         <StyledJsxRegistry>{children}</StyledJsxRegistry>
-        <AskCampaignPopup />
         <Analytics />
         <GoogleAnalytics gaId="G-3MVW1FNPDC" />
       </body>
