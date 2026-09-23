@@ -3,7 +3,7 @@ import PageShell from "@/components/PageShell";
 import PageHero from "@/components/PageHero";
 import ProductGrid from "@/components/ProductGrid";
 import { Reveal } from "@/components/Primitives";
-import { lowVoltage, primarySwitchgear, secondarySwitchgear, compactSubstation, dryTransformers } from "@/lib/content";
+import { lowVoltage, primarySwitchgear, secondarySwitchgear, compactSubstation, dryTransformers, instrumentTransformers, capacitors } from "@/lib/content";
 
 export const metadata = {
   title: "Our Products — Powerline",
@@ -17,6 +17,8 @@ const groups = [
   { data: secondarySwitchgear, href: "/secondary-switchgear", img: "/img/line-mv.webp" },
   { data: compactSubstation, href: "/compact-substation", img: "/img/prod-pcss.webp" },
   { data: dryTransformers, href: "/products/dry-type-transformers", img: "/img/prod-dry.webp" },
+  { data: instrumentTransformers, href: "/instrument-transformers", img: "/img/prod-instrument-transformers.webp" },
+  { data: capacitors, href: "/capacitors", img: "/img/prod-capacitor.webp" },
 ];
 
 export default function AssemblyLinesPage() {

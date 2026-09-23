@@ -76,7 +76,7 @@ export default function ProductGrid({ items }) {
         }
         .prod-thumb {
           position: relative;
-          aspect-ratio: 4 / 3;
+          aspect-ratio: 1 / 1;
           background: var(--bg-3);
           overflow: hidden;
         }
@@ -129,7 +129,7 @@ export default function ProductGrid({ items }) {
         }
         .num {
           position: absolute;
-          top: 0.9rem;
+          bottom: 0.9rem;
           left: 0.9rem;
           font-family: var(--font-head);
           font-weight: 800;

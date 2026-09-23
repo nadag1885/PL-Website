@@ -215,7 +215,7 @@ export default function ProductPage({ params }) {
         .features li { position:relative; padding-left:1.6rem; color:var(--text-dim); font-size:0.95rem; }
         .features li::before { content:""; position:absolute; left:0; top:0.55em; width:8px; height:8px; border-radius:50%; background:var(--orange); box-shadow:0 0 8px var(--orange); }
         .actions { display:flex; gap:1rem; flex-wrap:wrap; }
-        @media (max-width:850px){ .grid{ grid-template-columns:1fr; } }
+        @media (max-width:850px){ .grid{ grid-template-columns:1fr; } .actions{ justify-content:center; } }
       ` }} />
     </PageShell>
   );

@@ -168,6 +168,9 @@ export default function Footer() {
           .top {
             grid-template-columns: 1fr;
           }
+          .col :global(a.fcta) {
+            text-align: center;
+          }
           .bottom {
             flex-direction: column;
             gap: 0.6rem;

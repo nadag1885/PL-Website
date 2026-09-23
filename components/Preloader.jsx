@@ -2,14 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
-import CircuitIntro from "./CircuitIntro";
+import HubIntro from "./HubIntro";
 
 /**
  * SECTION 00 — Opening experience.
- * Black → the Powerline "P" powers up as the die of a circuit board → orange
- * traces draw outward from the logo and light their pads until the board is
- * complete → the finished board dollies toward the viewer and fades to reveal
- * the site.
+ * Black → the Powerline "P" powers up as a hub → five branches grow out of it
+ * one-by-one, lighting each value node and revealing its card → the completed
+ * network holds, then gently pushes in and fades to reveal the site.
  */
 export default function Preloader({ onComplete }) {
   const root = useRef(null);
@@ -36,18 +35,14 @@ export default function Preloader({ onComplete }) {
       return;
     }
 
-    // The board finishes drawing ≈1.7s. Hold a beat on the complete board, then
-    // freeze every loop (.ci-closing) and dolly the whole board toward the
-    // viewer while it fades — nothing restarts (no React state change until
-    // finish()), so the intro can never re-render mid-animation.
+    // The network finishes building ≈3.0s. Hold a beat on the complete network,
+    // then freeze the P's current loop (.hi-closing), gently push the whole scene
+    // in and fade it out. No React state changes until finish(), so the intro can
+    // never re-render mid-animation.
     const tl = gsap.timeline({ onComplete: finish });
-    tl.call(() => document.querySelector(".ci")?.classList.add("ci-closing"), null, 2.4);
-    tl.to(
-      ".ci-svg",
-      { scale: 1.9, transformOrigin: "50% 48%", duration: 1.3, ease: "power2.inOut", force3D: true },
-      2.4
-    );
-    tl.to(root.current, { autoAlpha: 0, duration: 1.0, ease: "power2.out" }, 2.95);
+    tl.call(() => document.querySelector(".hi")?.classList.add("hi-closing"), null, 3.2);
+    tl.to(".hi", { scale: 1.06, transformOrigin: "50% 50%", duration: 1.0, ease: "power2.inOut", force3D: true }, 3.2);
+    tl.to(root.current, { autoAlpha: 0, duration: 0.9, ease: "power2.out" }, 3.5);
 
     return () => tl.kill();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -57,7 +52,7 @@ export default function Preloader({ onComplete }) {
 
   return (
     <div className="pre" ref={root}>
-      <CircuitIntro />
+      <HubIntro />
 
       <style jsx>{`
         .pre {

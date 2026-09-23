@@ -1,6 +1,7 @@
 node_modules
 .next
 .next-preview
+.next-verify
 .vercel
 out
 .DS_Store
