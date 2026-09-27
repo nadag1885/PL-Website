@@ -7,7 +7,7 @@ import { track } from "@/lib/analytics";
 // Home-page robot mascot — a friendly support agent. Sits bottom-right; its big
 // glowing eyes follow the cursor (and blink), it wears a headset, and it pops a
 // short prompt in a speech bubble as the visitor scrolls — clicking it takes them
-// to the contact page. Built with HTML/CSS + inline SVG (no image) and brand
+// to the Ask page (chat assistant). Built with HTML/CSS + inline SVG (no image) and brand
 // colours. Keyframe animations use literal easings (styled-jsx drops the
 // `animation` shorthand when it contains var()).
 const QUESTIONS = [
@@ -37,7 +37,7 @@ export default function RobotAsk() {
     busyRef.current = true;
     track("robot_ask_click", {});
     setBubble(null);
-    router.push("/contact");
+    router.push("/ask");
   }, [router]);
 
   // Eyes follow the cursor: the whole (glowing) eye shifts a few px toward the
@@ -112,11 +112,11 @@ export default function RobotAsk() {
       {bubble && (
         <div className="bubble" aria-hidden="true" onClick={go}>
           <p className="q">{bubble}</p>
-          <span className="hint">Talk to us &rarr;</span>
+          <span className="hint">Ask Powerline &rarr;</span>
         </div>
       )}
 
-      <button className="bot" type="button" onClick={go} aria-label="Contact Powerline">
+      <button className="bot" type="button" onClick={go} aria-label="Ask Powerline">
         <span className="rig">
           <span className="assembly">
             <span className="band" aria-hidden="true" />
