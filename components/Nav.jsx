@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { nav, brand } from "@/lib/content";
 
 export default function Nav() {
@@ -34,7 +35,7 @@ export default function Nav() {
       <header className={`nav ${scrolled ? "is-scrolled" : ""} ${open ? "nav-hidden" : ""}`}>
         <div className="nav-inner">
           <Link href="/" className="brand" aria-label="Powerline home">
-            <img src="/img/logo-white.webp" alt="Powerline" className="brand-logo" />
+            <Image src="/img/logo-white.webp" alt="Powerline" width={180} height={90} className="brand-logo" priority />
           </Link>
 
           <nav className="links" aria-label="Primary">
@@ -106,7 +107,7 @@ export default function Nav() {
           onClick={(e) => e.stopPropagation()}
         >
           <div className="dr-head">
-            <img src="/img/logo-white.webp" alt="Powerline" className="dr-logo" />
+            <Image src="/img/logo-white.webp" alt="Powerline" width={180} height={90} className="dr-logo" />
             <button className="dr-close" aria-label="Close menu" onClick={() => setOpen(false)}>
               <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
                 <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -215,12 +216,14 @@ export default function Nav() {
           justify-content: space-between;
           gap: 1rem;
         }
-        .brand img {
+        /* next/image doesn't receive styled-jsx's scope class, so the logo is
+           sized with a :global() selector on its className. */
+        :global(.brand-logo) {
           height: 34px;
           width: auto;
           transition: height 0.4s var(--ease);
         }
-        .is-scrolled .brand img {
+        .is-scrolled :global(.brand-logo) {
           height: 30px;
         }
         .links {
@@ -402,7 +405,7 @@ export default function Nav() {
           border-bottom: 1px solid var(--line);
           flex: 0 0 auto;
         }
-        .dr-logo {
+        :global(.dr-logo) {
           height: 30px;
           width: auto;
         }

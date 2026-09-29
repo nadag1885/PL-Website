@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { productLines } from "@/lib/content";
 import { Reveal, CountUp } from "@/components/Primitives";
 
@@ -39,7 +40,7 @@ export default function ProductLines() {
             <Reveal key={l.key} delay={i * 70} className="cell">
               <article className="tile">
                 <Link href={l.href} className="tile-link" aria-label={`${l.title} — explore line`}>
-                  <img className="cover" src={l.img} alt={l.title} loading="lazy" decoding="async" />
+                  <Image className="cover" src={l.img} alt={l.title} fill sizes="(max-width: 520px) 22rem, (max-width: 860px) 50vw, (max-width: 1200px) 33vw, 25vw" style={{ objectFit: "cover" }} />
                   <span className="veil" aria-hidden="true" />
                   <span className="tint" aria-hidden="true" />
                   <span className="edge" aria-hidden="true" />
@@ -176,17 +177,14 @@ export default function ProductLines() {
           outline-offset: 3px;
           border-radius: 20px;
         }
-        .cover {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
+        /* next/image (fill) sets position/size/object-fit inline; styled-jsx can't
+           reach its <img>, so the zoom + tint live in :global() rules. */
+        :global(.cover) {
           transform: scale(1.03);
           transition: transform 0.7s var(--ease), filter 0.6s ease;
           filter: saturate(1.02);
         }
-        .tile:hover .cover {
+        .tile:hover :global(.cover) {
           transform: scale(1.1);
           filter: saturate(1.12);
         }
@@ -377,7 +375,7 @@ export default function ProductLines() {
 
         @media (prefers-reduced-motion: reduce) {
           .tile,
-          .cover,
+          :global(.cover),
           .veil,
           .tint,
           .edge,
@@ -389,7 +387,7 @@ export default function ProductLines() {
           .tile:hover {
             transform: none;
           }
-          .tile:hover .cover {
+          .tile:hover :global(.cover) {
             transform: scale(1.03);
           }
         }

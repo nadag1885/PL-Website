@@ -1,13 +1,13 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import { track } from "@/lib/analytics";
 
 // Home-page robot mascot — a friendly support agent. Sits bottom-right; its big
 // glowing eyes follow the cursor (and blink), it wears a headset, and it pops a
-// short prompt in a speech bubble as the visitor scrolls — clicking it takes them
-// to the Ask page (chat assistant). Built with HTML/CSS + inline SVG (no image) and brand
+// short prompt in a speech bubble as the visitor scrolls — clicking it opens the
+// Chatbase chat widget (this robot replaces Chatbase's own bubble launcher, which
+// is hidden via globals.css). Built with HTML/CSS + inline SVG (no image) and brand
 // colours. Keyframe animations use literal easings (styled-jsx drops the
 // `animation` shorthand when it contains var()).
 const QUESTIONS = [
@@ -22,7 +22,6 @@ const QUESTIONS = [
 ];
 
 export default function RobotAsk() {
-  const router = useRouter();
   const leftEye = useRef(null);
   const rightEye = useRef(null);
   const centers = useRef({ l: null, r: null });
@@ -33,12 +32,15 @@ export default function RobotAsk() {
   const [bubble, setBubble] = useState(null);
 
   const go = useCallback(() => {
-    if (busyRef.current) return;
-    busyRef.current = true;
     track("robot_ask_click", {});
+    busyRef.current = true; // engaged — stop popping scroll prompts
     setBubble(null);
-    router.push("/ask");
-  }, [router]);
+    // The robot is the chat launcher: open the Chatbase widget by triggering its
+    // (hidden) bubble button; fall back to the widget API if it isn't ready yet.
+    const btn = typeof document !== "undefined" && document.getElementById("chatbase-bubble-button");
+    if (btn) btn.click();
+    else if (typeof window !== "undefined" && typeof window.chatbase === "function") window.chatbase("open");
+  }, []);
 
   // Eyes follow the cursor: the whole (glowing) eye shifts a few px toward the
   // pointer within the clipped screen. Centres are cached (robot is fixed) and

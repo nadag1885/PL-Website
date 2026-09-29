@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="Powerline robot mascot">
+  <title>Powerline robot mascot</title>
+  <defs>
+    <linearGradient id="pl-head" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#2f2f39"/>
+      <stop offset="0.55" stop-color="#1a1a20"/>
+      <stop offset="1" stop-color="#0d0d11"/>
+    </linearGradient>
+    <linearGradient id="pl-cup" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2a2a34"/>
+      <stop offset="1" stop-color="#111116"/>
+    </linearGradient>
+    <radialGradient id="pl-screen" cx="0.5" cy="0.14" r="1">
+      <stop offset="0" stop-color="#16161f"/>
+      <stop offset="0.72" stop-color="#050507"/>
+    </radialGradient>
+    <radialGradient id="pl-eye" cx="0.38" cy="0.30" r="0.8">
+      <stop offset="0" stop-color="#ff8a4c"/>
+      <stop offset="0.72" stop-color="#e8722a"/>
+      <stop offset="1" stop-color="#d5601f"/>
+    </radialGradient>
+    <radialGradient id="pl-glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#e8722a" stop-opacity="0.26"/>
+      <stop offset="1" stop-color="#e8722a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="pl-screenhi" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="pl-eyeglow" x="-80%" y="-80%" width="260%" height="260%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3.2" flood-color="#e8722a" flood-opacity="0.85"/>
+    </filter>
+    <filter id="pl-softshadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="7" stdDeviation="9" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- brand glow -->
+  <ellipse cx="128" cy="126" rx="96" ry="92" fill="url(#pl-glow)"/>
+
+  <!-- headset band (behind the head) -->
+  <path d="M60 122 A74 72 0 0 1 196 122" fill="none" stroke="#23232c" stroke-width="16" stroke-linecap="round"/>
+  <path d="M62 118 A72 70 0 0 1 194 118" fill="none" stroke="#ffffff" stroke-opacity="0.10" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- ear cups (tuck under the head edges) -->
+  <g>
+    <rect x="50" y="104" width="26" height="52" rx="12" fill="url(#pl-cup)" stroke="#ffffff" stroke-opacity="0.08"/>
+    <ellipse cx="63" cy="130" rx="6.5" ry="13" fill="#e8722a" opacity="0.35" filter="url(#pl-eyeglow)"/>
+    <rect x="56" y="112" width="14" height="36" rx="7" fill="#08080b"/>
+  </g>
+  <g>
+    <rect x="180" y="104" width="26" height="52" rx="12" fill="url(#pl-cup)" stroke="#ffffff" stroke-opacity="0.08"/>
+    <ellipse cx="193" cy="130" rx="6.5" ry="13" fill="#e8722a" opacity="0.35" filter="url(#pl-eyeglow)"/>
+    <rect x="186" y="112" width="14" height="36" rx="7" fill="#08080b"/>
+  </g>
+
+  <!-- head -->
+  <rect x="74" y="78" width="108" height="104" rx="30" fill="url(#pl-head)" stroke="#ffffff" stroke-opacity="0.12" stroke-width="1.5" filter="url(#pl-softshadow)"/>
+
+  <!-- screen -->
+  <rect x="90" y="94" width="76" height="72" rx="22" fill="url(#pl-screen)"/>
+  <ellipse cx="128" cy="106" rx="40" ry="16" fill="url(#pl-screenhi)"/>
+
+  <!-- eyes -->
+  <g filter="url(#pl-eyeglow)">
+    <ellipse cx="115" cy="120" rx="9" ry="11" fill="url(#pl-eye)"/>
+    <ellipse cx="141" cy="120" rx="9" ry="11" fill="url(#pl-eye)"/>
+  </g>
+  <ellipse cx="112" cy="115" rx="3" ry="2.4" fill="#ffffff" opacity="0.92"/>
+  <ellipse cx="138" cy="115" rx="3" ry="2.4" fill="#ffffff" opacity="0.92"/>
+
+  <!-- smile -->
+  <path d="M116 143 Q128 156 140 143" fill="none" stroke="#e8722a" stroke-width="3.6" stroke-linecap="round" filter="url(#pl-eyeglow)"/>
+
+  <!-- headset boom mic -->
+  <path d="M66 150 Q58 187 100 194" fill="none" stroke="#26262f" stroke-width="4.5" stroke-linecap="round"/>
+  <circle cx="104" cy="194" r="5.6" fill="#e8722a" filter="url(#pl-eyeglow)"/>
+</svg>

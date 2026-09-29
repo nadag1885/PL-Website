@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { safety } from "@/lib/content";
@@ -30,7 +31,7 @@ export default function Safety() {
   return (
     <section className="safety" ref={root}>
       <div className="sf-img">
-        <img src={safety.img} alt="Powerline facility — safety first" loading="lazy" />
+        <Image src={safety.img} alt="Powerline facility — safety first" fill sizes="100vw" style={{ objectFit: "cover" }} />
         <div className="veil" />
       </div>
       <div className="container sf-content">
@@ -55,10 +56,10 @@ export default function Safety() {
           inset: -10% 0;
           z-index: 0;
         }
-        .sf-img img {
-          width: 100%;
-          height: 120%;
-          object-fit: cover;
+        /* next/image (fill) defaults to height:100%; the parallax needs the photo
+           taller than its frame, so force 120% (styled-jsx can't scope its <img>). */
+        .sf-img :global(img) {
+          height: 120% !important;
           will-change: transform;
         }
         .veil {

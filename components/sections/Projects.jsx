@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import { projects } from "@/lib/content";
 import { Reveal } from "@/components/Primitives";
 
@@ -140,12 +141,14 @@ export default function Projects() {
             <div className="pj-track" ref={trackRef}>
               {loop.map((p, i) => (
                 <article className="pj-card" key={i}>
-                  <img
+                  <Image
                     className="pj-card-img"
                     src={p.img}
                     alt={p.name}
-                    loading="lazy"
-                    draggable="false"
+                    fill
+                    sizes="(max-width: 900px) 78vw, 25rem"
+                    style={{ objectFit: "cover" }}
+                    draggable={false}
                     onError={(e) => { e.currentTarget.style.display = "none"; }}
                   />
                   <span className="pj-card-veil" />
@@ -220,7 +223,8 @@ export default function Projects() {
           will-change: transform;
           user-select: none;
         }
-        .pj-card-img {
+        /* next/image can't receive styled-jsx's scope class → target :global(). */
+        :global(.pj-card-img) {
           -webkit-user-drag: none;
           user-select: none;
         }
@@ -245,17 +249,14 @@ export default function Projects() {
           border-color: rgba(232, 114, 42, 0.45);
           transform: translateY(-6px);
         }
-        .pj-card-img {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
+        /* fill sets position/size/object-fit inline; these add the base zoom +
+           layering that styled-jsx scoping can't reach. */
+        :global(.pj-card-img) {
           z-index: 0;
           transform: scale(1.04);
           transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .pj-card:hover .pj-card-img {
+        .pj-card:hover :global(.pj-card-img) {
           transform: scale(1.1);
         }
         .pj-card-veil {

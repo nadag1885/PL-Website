@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { milestones } from "@/lib/content";
 
 const INTERVAL = 3120; // ms each milestone holds before auto-advancing (5200 − 40%)
@@ -138,9 +139,12 @@ export default function Milestones() {
                 <div className="ms-media">
                   {/* always load every slide's image (only 9) so jumping to any
                      year never shows a blank — windowed src caused that */}
-                  <img
+                  <Image
                     src={m.img}
                     alt={`${m.year} — ${m.title}`}
+                    fill
+                    sizes="(max-width: 900px) 92vw, 46vw"
+                    style={{ objectFit: "cover" }}
                     loading={i === 0 ? "eager" : "lazy"}
                   />
                   <span className="ms-frame" />
@@ -367,24 +371,10 @@ export default function Milestones() {
           border: 1px solid var(--line);
           z-index: 1;
         }
-        .ms-media img {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-        /* slow Ken-Burns push on the active photo only */
-        .is-active .ms-media img {
+        /* next/image (fill) sets position/size/object-fit inline; the Ken-Burns
+           keyframe lives in globals.css so it can reach next/image's <img>. */
+        .is-active .ms-media :global(img) {
           animation: msKB 6s ease-out both;
-        }
-        @keyframes msKB {
-          from {
-            transform: scale(1.001);
-          }
-          to {
-            transform: scale(1.08);
-          }
         }
         .ms-frame {
           position: absolute;

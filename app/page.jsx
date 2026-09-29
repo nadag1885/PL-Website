@@ -8,7 +8,6 @@ import EnergyField from "@/components/EnergyField";
 import EnergyRail from "@/components/EnergyRail";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import RobotAsk from "@/components/RobotAsk";
 
 // Eager: above-the-fold + all pinned/scrubbed sections (their pin math must be
 // stable at first paint).
@@ -35,6 +34,8 @@ const CTA = dynamic(() => import("@/components/sections/CTA"), {
 const Memorial = dynamic(() => import("@/components/sections/Memorial"), {
   loading: () => <div style={{ minHeight: "70vh" }} aria-hidden />,
 });
+// Non-critical floating helper — keep it out of the initial bundle.
+const RobotAsk = dynamic(() => import("@/components/RobotAsk"), { ssr: false });
 
 // Module-scoped flag: false on a full page load (first open / reload), and
 // stays true across in-app navigation. So the intro plays once per page load,

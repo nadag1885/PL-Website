@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Reveal } from "@/components/Primitives";
 
 export default function PageHero({ eyebrow, title, accent, lead, img }) {
@@ -7,7 +8,7 @@ export default function PageHero({ eyebrow, title, accent, lead, img }) {
     <header className="ph">
       {img && (
         <div className="ph-bg">
-          <img src={img} alt="" aria-hidden="true" />
+          <Image src={img} alt="" aria-hidden="true" fill sizes="(max-width: 1200px) 100vw, 1200px" style={{ objectFit: "cover", opacity: 0.35 }} priority />
           <div className="ph-veil" />
         </div>
       )}

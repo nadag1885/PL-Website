@@ -9,13 +9,14 @@ import ChunkReload from "@/components/ChunkReload";
 // no manual <head>. Montserrat stands in for the proprietary Nexa headline face.
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  // Only the weights actually used in the UI (300 and 900 were unused).
+  weight: ["400", "500", "600", "700"],
   display: "swap",
   variable: "--font-poppins",
 });
 const montserrat = Montserrat({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
   variable: "--font-montserrat",
 });
@@ -72,6 +73,13 @@ export default function RootLayout({ children }) {
         <StyledJsxRegistry>{children}</StyledJsxRegistry>
         <Analytics />
         <GoogleAnalytics gaId="G-3MVW1FNPDC" />
+        {/* Chatbase AI chat bubble — embed kept verbatim (the pasted script.domain
+            arrived with a markdown-link artifact; corrected to "www.chatbase.co"). */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="GTXWwV81kOPxm9yQkgeul";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();`,
+          }}
+        />
       </body>
     </html>
   );

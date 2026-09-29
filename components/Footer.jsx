@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { brand, nav, locations } from "@/lib/content";
 
 export default function Footer() {
@@ -9,7 +10,7 @@ export default function Footer() {
       <div className="container">
         <div className="top">
           <div className="col brand-col">
-            <img src="/img/logo-white.webp" alt="Powerline" className="flogo" />
+            <Image src="/img/logo-white.webp" alt="Powerline" width={180} height={90} className="flogo" />
             <p className="ftag">{brand.tagline}</p>
             <div className="socials">
               <a href={brand.facebook} target="_blank" rel="noreferrer" aria-label="Facebook">Facebook</a>
@@ -77,7 +78,8 @@ export default function Footer() {
           padding-bottom: 3rem;
           border-bottom: 1px solid var(--line);
         }
-        .flogo {
+        /* next/image doesn't receive styled-jsx's scope class → size via :global(). */
+        :global(.flogo) {
           height: 3.375rem;
           width: auto;
           max-width: none;

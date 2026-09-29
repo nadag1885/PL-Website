@@ -380,3 +380,22 @@ button {
     scroll-behavior: auto !important;
   }
 }
+
+/* Chatbase widget: the floating robot mascot IS the chat launcher, so hide
+   Chatbase's own bubble button and proactive message bubbles (clicking the robot
+   opens the chat). The chat window (#chatbase-bubble-window) still shows on demand. */
+#chatbase-bubble-button,
+#chatbase-message-bubbles {
+  display: none !important;
+}
+
+/* Ken-Burns zoom for the Milestones carousel's active photo. Kept global so it
+   can target next/image's <img>, which styled-jsx can't scope into. */
+@keyframes msKB {
+  from {
+    transform: scale(1.001);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}

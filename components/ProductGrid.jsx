@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Reveal } from "@/components/Primitives";
 import { products } from "@/lib/content";
 
@@ -23,10 +24,10 @@ export default function ProductGrid({ items }) {
             <Link href={p.href} className="prod">
               <div className={`prod-thumb ${hover ? "has-hover" : ""}`}>
                 {imgFor(p.href) && (
-                  <img className="img-base" src={imgFor(p.href)} alt={p.name} loading="lazy" />
+                  <Image className="img-base" src={imgFor(p.href)} alt={p.name} fill sizes="(max-width:700px) 92vw, (max-width:1100px) 46vw, 340px" style={{ objectFit: "cover" }} />
                 )}
                 {hover && (
-                  <img className="img-hover" src={hover} alt={`${p.name} — interior`} loading="lazy" />
+                  <Image className="img-hover" src={hover} alt={`${p.name} — interior`} fill sizes="(max-width:700px) 92vw, (max-width:1100px) 46vw, 340px" style={{ objectFit: "cover" }} />
                 )}
                 <span className="num">{String(i + 1).padStart(2, "0")}</span>
               </div>
@@ -41,7 +42,7 @@ export default function ProductGrid({ items }) {
             {/* the seal lives OUTSIDE the clipped card so it can hang off the
                 top-right corner onto the page, like the single product page */}
             {badgeFor(p.href) && (
-              <img className="card-badge" src={badgeFor(p.href)} alt="Type Tested by Powerline" loading="lazy" draggable="false" />
+              <Image className="card-badge" src={badgeFor(p.href)} alt="Type Tested by Powerline" width={90} height={90} draggable="false" />
             )}
           </div>
         </Reveal>
@@ -80,26 +81,24 @@ export default function ProductGrid({ items }) {
           background: var(--bg-3);
           overflow: hidden;
         }
-        .prod-thumb img {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
+        /* next/image (fill) sets position/size/object-fit inline; styled-jsx can't
+           reach its <img>, so the crossfade + zoom live in :global() rules. */
+        :global(.img-base),
+        :global(.img-hover) {
           transition: opacity 0.55s var(--ease), transform 0.6s var(--ease);
         }
-        .img-hover {
+        :global(.img-hover) {
           opacity: 0;
         }
         /* crossfade to the interior image when one exists */
-        .prod:hover .prod-thumb.has-hover .img-base {
+        .prod:hover .prod-thumb.has-hover :global(.img-base) {
           opacity: 0;
         }
-        .prod:hover .prod-thumb.has-hover .img-hover {
+        .prod:hover .prod-thumb.has-hover :global(.img-hover) {
           opacity: 1;
         }
         /* single-image cards just zoom */
-        .prod:hover .prod-thumb:not(.has-hover) .img-base {
+        .prod:hover .prod-thumb:not(.has-hover) :global(.img-base) {
           transform: scale(1.05);
         }
         .prod-thumb::after {
@@ -112,7 +111,7 @@ export default function ProductGrid({ items }) {
            like the single product page (it sits in .prod-wrap, outside the
            clipped card). pointer-events:none so the card stays fully clickable
            underneath. */
-        .card-badge {
+        :global(.card-badge) {
           position: absolute;
           top: 0;
           right: 0;

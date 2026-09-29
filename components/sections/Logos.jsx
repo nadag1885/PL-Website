@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { customers, partners } from "@/lib/content";
 import { Reveal } from "@/components/Primitives";
 
@@ -13,7 +14,7 @@ function Marquee({ items, reverse, alt }) {
       <div className={`mq-track ${reverse ? "rev" : ""}`}>
         {loop.map((src, i) => (
           <div className="logo" key={i}>
-            <img src={src} alt={alt} loading="lazy" />
+            <Image src={src} alt={alt} fill sizes="184px" style={{ objectFit: "contain" }} />
           </div>
         ))}
       </div>
@@ -48,6 +49,7 @@ function Marquee({ items, reverse, alt }) {
           animation-play-state: paused;
         }
         .logo {
+          position: relative;
           flex: 0 0 auto;
           height: 6.25rem;
           width: 11.5rem;
@@ -64,18 +66,17 @@ function Marquee({ items, reverse, alt }) {
           transform: translateY(-4px);
           box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
         }
-        .logo img {
-          display: block;
-          max-height: 100%;
-          max-width: 100%;
-          margin: auto;
-          object-fit: contain;
+        /* next/image (fill) handles size/object-fit; keep the plate padding on the
+           image and globalize grayscale + hover (styled-jsx can't scope its <img>). */
+        .logo :global(img) {
+          padding: 0.7rem 1rem;
+          box-sizing: border-box;
           object-position: center;
           filter: grayscale(1);
           opacity: 0.82;
           transition: filter 0.3s, opacity 0.3s;
         }
-        .logo:hover img {
+        .logo:hover :global(img) {
           filter: none;
           opacity: 1;
         }

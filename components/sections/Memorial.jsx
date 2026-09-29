@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { memorial } from "@/lib/content";
 import { Reveal } from "@/components/Primitives";
 
@@ -14,7 +15,7 @@ export default function Memorial() {
         <Reveal>
           <div className="inner">
             <div className="portrait">
-              <img src={memorial.img} alt={memorial.name} loading="lazy" />
+              <Image src={memorial.img} alt={memorial.name} fill sizes="(max-width: 760px) 240px, 300px" style={{ objectFit: "cover", transform: "scale(1.6)", transformOrigin: "50% 58%", filter: "grayscale(0.2)" }} />
               <span className="ember" />
             </div>
 

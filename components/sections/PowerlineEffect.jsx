@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
+import Image from "next/image";
 import { powerlineEffect } from "@/lib/content";
 import { Reveal } from "@/components/Primitives";
 
@@ -65,9 +66,9 @@ export default function PowerlineEffect() {
               if (e.key === "ArrowRight") setPos((p) => Math.min(100, p + 4));
             }}
           >
-            <img className="after" src={powerlineEffect.after} alt="After Powerline installation" draggable="false" loading="lazy" decoding="async" />
+            <Image className="after" src={powerlineEffect.after} alt="After Powerline installation" fill sizes="(max-width: 1280px) 100vw, 1280px" style={{ objectFit: "cover" }} draggable={false} />
             <div className="before" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
-              <img src={powerlineEffect.before} alt="Before installation" draggable="false" loading="lazy" decoding="async" />
+              <Image src={powerlineEffect.before} alt="Before installation" fill sizes="(max-width: 1280px) 100vw, 1280px" style={{ objectFit: "cover" }} draggable={false} />
               <span className="tag tag-b">Before</span>
             </div>
             <span className="tag tag-a">After</span>

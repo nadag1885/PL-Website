@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 export default function ProductGallery({ images, alt, badge }) {
   const list = images && images.length ? images : [];
@@ -13,7 +14,7 @@ export default function ProductGallery({ images, alt, badge }) {
           spill onto the page; .main itself still clips the photo. */}
       <div className="main-wrap">
         <div className="main">
-          <img src={list[active]} alt={alt} />
+          <Image src={list[active]} alt={alt} fill sizes="(max-width:850px) 92vw, 46vw" style={{ objectFit: "contain" }} priority />
           <span className="frame" />
         </div>
 
@@ -21,6 +22,8 @@ export default function ProductGallery({ images, alt, badge }) {
           /* a real stamp impression pressed across the edge of the image —
              ~half on the photo, ~half on the page behind it */
           <span className="pg-cert" aria-hidden="false">
+            {/* Raw <img>: this stamp keeps its styled-jsx scoped animation, which
+                next/image's <img> can't receive. It's a small (700px) seal. */}
             <img
               className="pg-badge"
               src={badge}
@@ -40,7 +43,7 @@ export default function ProductGallery({ images, alt, badge }) {
               aria-label={`${alt} image ${i + 1}`}
               aria-current={i === active}
             >
-              <img src={src} alt="" loading="lazy" />
+              <Image src={src} alt="" width={84} height={84} style={{ objectFit: "contain" }} />
             </button>
           ))}
         </div>
