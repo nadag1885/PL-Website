@@ -5,9 +5,10 @@ const nextConfig = {
   // (NEXT_DIST_DIR=.next-preview) so it never clobbers the user's `.next`.
   distDir: process.env.NEXT_DIST_DIR || ".next",
   images: {
-    // Serve modern formats (AVIF first, then WebP) and let next/image resize each
-    // image down to the size it's actually displayed at.
-    formats: ["image/avif", "image/webp"],
+    // WebP only: the source images are already WebP, so resizing to WebP is fast to
+    // generate on first request. AVIF re-encoding was ~10x slower on the first load
+    // of each variant (then cached), which made images feel slow on first visit.
+    formats: ["image/webp"],
     // Local bundled assets only; allow Shopify CDN as a fallback if ever needed.
     remotePatterns: [{ protocol: "https", hostname: "powerlinei.com" }],
   },

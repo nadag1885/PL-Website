@@ -1,5 +1,5 @@
 import "./globals.css";
-import { Poppins, Montserrat } from "next/font/google";
+import { Poppins, Montserrat, Archivo } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import StyledJsxRegistry from "./registry";
@@ -19,6 +19,14 @@ const montserrat = Montserrat({
   weight: ["400", "500", "600", "700", "800"],
   display: "swap",
   variable: "--font-montserrat",
+});
+// Archivo is the Powerline wordmark typeface (POWER 800 / LINE 300) — used by the
+// inline logo SVG in the nav and footer.
+const archivo = Archivo({
+  subsets: ["latin"],
+  weight: ["300", "800"],
+  display: "swap",
+  variable: "--font-archivo",
 });
 
 export const metadata = {
@@ -64,7 +72,7 @@ const CRITICAL_CSS = `
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${poppins.variable} ${montserrat.variable}`}>
+    <html lang="en" className={`${poppins.variable} ${montserrat.variable} ${archivo.variable}`}>
       <head>
         <style dangerouslySetInnerHTML={{ __html: CRITICAL_CSS }} />
       </head>

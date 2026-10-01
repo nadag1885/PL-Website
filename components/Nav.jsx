@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import LogoWordmark from "@/components/LogoWordmark";
 import { nav, brand } from "@/lib/content";
 
 export default function Nav() {
@@ -35,7 +35,7 @@ export default function Nav() {
       <header className={`nav ${scrolled ? "is-scrolled" : ""} ${open ? "nav-hidden" : ""}`}>
         <div className="nav-inner">
           <Link href="/" className="brand" aria-label="Powerline home">
-            <Image src="/img/logo-white.webp" alt="Powerline" width={180} height={90} className="brand-logo" priority />
+            <LogoWordmark animated className="brand-logo" />
           </Link>
 
           <nav className="links" aria-label="Primary">
@@ -107,7 +107,7 @@ export default function Nav() {
           onClick={(e) => e.stopPropagation()}
         >
           <div className="dr-head">
-            <Image src="/img/logo-white.webp" alt="Powerline" width={180} height={90} className="dr-logo" />
+            <LogoWordmark className="dr-logo" />
             <button className="dr-close" aria-label="Close menu" onClick={() => setOpen(false)}>
               <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
                 <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -219,12 +219,13 @@ export default function Nav() {
         /* next/image doesn't receive styled-jsx's scope class, so the logo is
            sized with a :global() selector on its className. */
         :global(.brand-logo) {
-          height: 34px;
+          height: 40px;
           width: auto;
+          display: block;
           transition: height 0.4s var(--ease);
         }
         .is-scrolled :global(.brand-logo) {
-          height: 30px;
+          height: 34px;
         }
         .links {
           display: flex;
@@ -406,8 +407,9 @@ export default function Nav() {
           flex: 0 0 auto;
         }
         :global(.dr-logo) {
-          height: 30px;
+          height: 26px;
           width: auto;
+          display: block;
         }
         .dr-close {
           width: 42px;
@@ -574,15 +576,15 @@ export default function Nav() {
           :global(.links .link) { font-size: 0.82rem; padding: 0.5rem 0.3rem; }
           :global(.call),
           :global(.cta) { font-size: 0.72rem; padding: 0.55rem 0.85rem; }
-          :global(.brand-logo) { height: 4.6rem; }
-          .nav.is-scrolled :global(.brand-logo) { height: 3.9rem; }
+          :global(.brand-logo) { height: 46px; }
+          .nav.is-scrolled :global(.brand-logo) { height: 38px; }
         }
         @media (min-width: 1025px) and (max-width: 1200px) {
           .links { gap: clamp(0.1rem, 0.35vw, 0.4rem); }
           :global(.links .link) { font-size: 0.78rem; padding: 0.5rem 0.25rem; }
           :global(.call),
           :global(.cta) { font-size: 0.66rem; padding: 0.5rem 0.7rem; }
-          :global(.brand-logo) { height: 4rem; }
+          :global(.brand-logo) { height: 42px; }
         }
       `}</style>
     </>

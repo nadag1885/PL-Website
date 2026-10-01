@@ -399,3 +399,17 @@ button {
     transform: scale(1.08);
   }
 }
+
+/* Logo line-fill (nav): default shows the animated masked fill; reduced-motion
+   swaps in the static filled line instead. */
+.pl-static-fill {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pl-anim-fill {
+    display: none;
+  }
+  .pl-static-fill {
+    display: inline;
+  }
+}
